@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EFD Agent Dashboard</title>
+
+<link rel="stylesheet" href="css/shared-design-system.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loading.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { display: flex; background: var(--surface-variant); min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+    width: 250px; height: 100vh;
+    background: linear-gradient(180deg, #0D47A1, #1565C0);
+    position: fixed; left: 0; top: 0; color: white;
+    padding: 25px; box-shadow: 2px 0 20px rgba(0,0,0,0.15); z-index: 100;
+}
+.sidebar h2 { text-align: center; margin-bottom: 35px; font-size: 22px; }
+.sidebar a {
+    display: block; color: rgba(255,255,255,0.85);
+    text-decoration: none; padding: 14px 18px; margin-bottom: 6px;
+    border-radius: 12px; transition: all 0.3s ease; font-size: 15px;
+}
+.sidebar a i { width: 24px; margin-right: 8px; }
+.sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,0.15); color: white; transform: translateX(5px); }
+
+/* Main */
+.main { margin-left: 250px; width: 100%; padding: 25px 30px; }
+
+/* Topbar */
+.topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 25px; background: white; padding: 16px 24px;
+    border-radius: 16px; box-shadow: var(--shadow-sm);
+}
+.topbar h1 { color: #0D47A1; font-size: 20px; }
+.topbar .header-right { display: flex; align-items: center; gap: 12px; }
+.service-badge {
+    background: #E3F2FD; color: #1565C0; padding: 6px 18px;
+    border-radius: 25px; font-size: 13px; font-weight: 500;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 25px;
+}
+.stat-card {
+    background: white; padding: 20px; border-radius: 14px;
+    box-shadow: var(--shadow-sm); transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.stat-card .stat-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 12px;
+}
+.stat-card h3 { font-size: 28px; font-weight: 700; color: var(--neutral-900); }
+.stat-card p { font-size: 12px; color: var(--neutral-500); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.stat-card.earnings .stat-icon { background: #FFF3E0; color: #FF9800; }
+.stat-card.earnings h3 { color: #F57C00; }
+.stat-card.jobs .stat-icon { background: #E3F2FD; color: #1565C0; }
+.stat-card.rating .stat-icon { background: #F3E5F5; color: #6A1B9A; }
+.stat-card.acceptance .stat-icon { background: #E8F5E9; color: #4CAF50; }
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.filter-tab {
+    padding: 8px 20px; border-radius: 25px; border: 2px solid var(--neutral-200);
+    background: white; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--neutral-600); transition: all 0.3s ease;
+}
+.filter-tab:hover { border-color: var(--primary-400); color: var(--primary-700); }
+.filter-tab.active { background: var(--primary-700); color: white; border-color: var(--primary-700); }
+.filter-tab .count {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 11px;
+    margin-left: 6px; background: rgba(0,0,0,0.1);
+}
+.filter-tab.active .count { background: rgba(255,255,255,0.25); }
+
+/* Sections */
+.section {
+    background: white; border-radius: 18px; padding: 24px;
+    margin-bottom: 25px; box-shadow: var(--shadow-sm);
+}
+.section h2 {
+    font-size: 18px; color: var(--neutral-800); margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 14px; border-bottom: 2px solid var(--neutral-100);
+}
+
+/* Order Cards */
+.order-card {
+    background: var(--surface-variant); padding: 20px;
+    border-radius: 14px; margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: all 0.3s ease; position: relative;
+    border-left: 4px solid #FF9800;
+}
+.order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.order-card.pending-order { border-left-color: #FF9800; }
+.order-card.active-order { border-left-color: #2196F3; background: linear-gradient(135deg, #f0f7ff, white); }
+.order-card.completed-order { border-left-color: #4CAF50; }
+
+.order-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
+}
+.order-header h3 { font-size: 16px; color: var(--neutral-800); }
+.order-status-badge {
+    padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+}
+.order-body { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.order-body p { font-size: 13px; color: var(--neutral-600); }
+.order-body p i { width: 16px; color: var(--primary-600); }
+.order-actions { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Earnings Section */
+.earnings-breakdown {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.earnings-item {
+    text-align: center; padding: 16px; background: var(--surface-variant);
+    border-radius: 12px;
+}
+.earnings-item h4 { font-size: 22px; font-weight: 700; color: var(--primary-700); }
+.earnings-item p { font-size: 12px; color: var(--neutral-500); }
+
+@media (max-width: 768px) {
+    .sidebar { width: 70px; padding: 15px 10px; }
+    .sidebar h2 { font-size: 14px; }
+    .sidebar a span { display: none; }
+    .sidebar a i { width: auto; margin-right: 0; font-size: 18px; }
+    .sidebar a { text-align: center; padding: 12px; }
+    .main { margin-left: 70px; padding: 20px 15px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .earnings-breakdown { grid-template-columns: 1fr; }
+    .order-body { grid-template-columns: 1fr; }
+    .topbar { flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>🔧 EFD Agent</h2>
+    <a href="#" class="active"><i class="fa-solid fa-gauge-high"></i> <span>Dashboard</span></a>
+    <a href="#" onclick="filterOrders('all')"><i class="fa-solid fa-clock"></i> <span>Active Orders</span></a>
+    <a href="#" onclick="filterOrders('completed')"><i class="fa-solid fa-list-check"></i> <span>Completed</span></a>
+    <a href="#" onclick="openUPISettings()"><i class="fa-solid fa-qrcode"></i> <span>UPI Settings</span></a>
+    <a href="#" id="logout"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
+</div>
+
+<div class="main page-enter">
+    <div class="topbar">
+        <h1>📋 Agent Dashboard</h1>
+        <div class="header-right">
+            <span class="service-badge">Service: <strong id="agentServiceName">-</strong></span>
+            <span class="service-badge" style="background:#E8F5E9;color:#2E7D32;">
+                <span class="status-dot active"></span> Online
+            </span>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card earnings card-stagger">
+            <div class="stat-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <h3 id="todayEarnings">₹0</h3>
+            <p>Today's Earnings</p>
+        </div>
+        <div class="stat-card jobs card-stagger">
+            <div class="stat-icon"><i class="fa-solid fa-box"></i></div>
+            <h3 id="totalJobs">0</h3>
+            <p>Total Jobs</p>
+        </div>
+        <div class="stat-card rating card-stagger">
+            <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+            <h3 id="agentRating">4.8</h3>
+            <p>Rating</p>
+        </div>
+        <div class="stat-card acceptance card-stagger">
+            <div class="stat-icon"><i class="fa-solid fa-handshake"></i></div>
+            <h3 id="acceptanceRate">95%</h3>
+            <p>Acceptance Rate</p>
+        </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">
+            All <span class="count" id="countAll">0</span>
+        </button>
+        <button class="filter-tab" data-filter="pending" onclick="setFilter('pending')">
+            Pending <span class="count" id="countPending">0</span>
+        </button>
+        <button class="filter-tab" data-filter="active" onclick="setFilter('active')">
+            Active <span class="count" id="countActive">0</span>
+        </button>
+        <button class="filter-tab" data-filter="completed" onclick="setFilter('completed')">
+            Completed <span class="count" id="countCompleted">0</span>
+        </button>
+    </div>
+
+    <!-- Earnings Section -->
+    <div class="section card-stagger">
+        <h2><i class="fa-solid fa-chart-line" style="color:#FF9800;"></i> Earnings Breakdown</h2>
+        <div class="earnings-breakdown">
+            <div class="earnings-item">
+                <h4 id="earningsToday">₹0</h4>
+                <p>Today</p>
+            </div>
+            <div class="earnings-item">
+                <h4 id="earningsWeek">₹0</h4>
+                <p>This Week</p>
+            </div>
+            <div class="earnings-item">
+                <h4 id="earningsMonth">₹0</h4>
+                <p>This Month</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Orders -->
+    <div class="section card-stagger" id="activeSection">
+        <h2><i class="fa-solid fa-play-circle" style="color:#4CAF50;"></i> Active Orders</h2>
+        <div id="activeOrders">
+            <div class="loading-placeholder">
+                <div class="spinner-modern spinner-lg" style="margin:0 auto 12px;"></div>
+                <p>Loading active orders...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Orders -->
+    <div class="section card-stagger" id="pendingSection">
+        <h2><i class="fa-solid fa-inbox" style="color:#FF9800;"></i> Pending Orders</h2>
+        <div id="orders">
+            <div class="loading-placeholder">
+                <div class="spinner-modern spinner-lg" style="margin:0 auto 12px;"></div>
+                <p>Loading pending orders...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Orders -->
+    <div class="section card-stagger" id="completedSection" style="display:none;">
+        <h2><i class="fa-solid fa-circle-check" style="color:#4CAF50;"></i> Completed Orders</h2>
+        <div id="completedOrders">
+            <div class="loading-placeholder">
+                <div class="spinner-modern spinner-lg" style="margin:0 auto 12px;"></div>
+                <p>Loading completed orders...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="js/toast.js"></script>
+<script type="module" src="js/agent-auth.js"></script>
+<script type="module" src="js/agent-location.js"></script>
+<script type="module" src="js/agent.js"></script>
+<script type="module" src="js/agent-upi.js"></script>
+
+<!-- ===== UPI SETTINGS MODAL ===== -->
+<div id="upiModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:1000;justify-content:center;align-items:center;padding:20px;animation:fadeIn 0.3s ease;">
+    <div style="background:white;border-radius:24px;padding:32px;max-width:420px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.3);animation:slideUpDialog 0.4s cubic-bezier(0.34,1.56,0.64,1);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+            <h2 style="color:#0D47A1;font-size:20px;display:flex;align-items:center;gap:8px;">
+                <i class="fa-solid fa-qrcode" style="color:#1565C0;"></i> UPI Payment Settings
+            </h2>
+            <button onclick="closeUPISettings()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#999;padding:0;width:auto;">&times;</button>
+        </div>
+
+        <p style="color:#666;font-size:13px;margin-bottom:20px;">
+            Set your UPI ID to receive payments from customers. A QR code will be generated for each payment.
+        </p>
+
+        <div id="upiStatusDisplay" style="background:#f0f7ff;padding:12px 16px;border-radius:12px;margin-bottom:20px;font-size:14px;display:flex;align-items:center;gap:8px;">
+            <i class="fa-solid fa-circle-exclamation" style="color:#FF9800;"></i>
+            <span style="color:#FF9800;">UPI not set</span>
+        </div>
+
+        <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:6px;">UPI ID</label>
+        <input type="text" id="upiIdInput" placeholder="e.g. agentname@paytm" style="width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:'Poppins',sans-serif;outline:none;transition:all 0.3s;box-sizing:border-box;" onfocus="this.style.borderColor='#1565C0';this.style.boxShadow='0 0 0 4px rgba(21,101,192,0.1)'" onblur="this.style.borderColor='#e0e0e0';this.style.boxShadow='none'">
+
+        <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:6px;margin-top:14px;">Account Holder Name (optional)</label>
+        <input type="text" id="upiNameInput" placeholder="Your name" style="width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:'Poppins',sans-serif;outline:none;transition:all 0.3s;box-sizing:border-box;" onfocus="this.style.borderColor='#1565C0';this.style.boxShadow='0 0 0 4px rgba(21,101,192,0.1)'" onblur="this.style.borderColor='#e0e0e0';this.style.boxShadow='none'">
+
+        <button id="saveUPIBtn" onclick="saveUPIDetails()" style="width:100%;padding:16px;margin-top:22px;background:linear-gradient(135deg,#1565C0,#1976D2);color:white;border:none;border-radius:12px;font-size:17px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.3s;box-shadow:0 8px 25px rgba(21,101,192,0.3);">
+            <i class="fa-solid fa-floppy-disk"></i> Save UPI Details
+        </button>
+
+        <button onclick="closeUPISettings()" style="width:100%;padding:14px;margin-top:10px;background:transparent;color:#666;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif;transition:all 0.3s;">
+            Cancel
+        </button>
+    </div>
+</div>
+
+<script>
+// Set agent service name
+var service = localStorage.getItem("agentService");
+var badge = document.getElementById("agentServiceName");
+if (badge && service) {
+    badge.innerText = service;
+}
+
+// Filter state
+var currentFilter = 'all';
+
+window.setFilter = function(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+    
+    document.getElementById('activeSection').style.display = (filter === 'all' || filter === 'active') ? 'block' : 'none';
+    document.getElementById('pendingSection').style.display = (filter === 'all' || filter === 'pending') ? 'block' : 'none';
+    document.getElementById('completedSection').style.display = (filter === 'all' || filter === 'completed') ? 'block' : 'none';
+};
+
+window.filterOrders = function(f) { setFilter(f); };
+</script>
+</body>
+</html>
+

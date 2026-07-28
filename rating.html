@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Rate Your Experience - EFD</title>
+
+<link rel="stylesheet" href="css/shared-design-system.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/rating.css">
+<link rel="stylesheet" href="css/loading.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="rating-box">
+
+<h1>⭐ Rate Your Experience</h1>
+
+<p style="color:#888;margin-bottom:20px;">How was your service? Tap a star to rate.</p>
+
+<div class="stars">
+
+<span class="star">★</span>
+<span class="star">★</span>
+<span class="star">★</span>
+<span class="star">★</span>
+<span class="star">★</span>
+
+</div>
+
+<textarea
+id="review"
+placeholder="Write your feedback...">
+</textarea>
+
+<button id="submitReview">
+Submit Review
+</button>
+
+</div>
+
+<script type="module" src="js/toast.js"></script>
+<script type="module" src="js/rating.js"></script>
+
+</body>
+
+</html>

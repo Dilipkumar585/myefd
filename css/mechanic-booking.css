@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1565c0 0%, #1e88e5 50%, #42a5f5 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.booking-container {
+    width: 500px;
+    max-width: 100%;
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.booking-container h1 {
+    text-align: center;
+    margin-bottom: 8px;
+    color: #1565c0;
+    font-size: 28px;
+}
+
+.booking-container > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+.booking-container input {
+    width: 100%;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.booking-container input:focus {
+    border-color: #1565c0;
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(21, 101, 192, 0.1);
+}
+
+.booking-container input::placeholder {
+    color: #999;
+}
+
+.booking-container button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #1565c0, #1976d2);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(21, 101, 192, 0.3);
+}
+
+.booking-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(21, 101, 192, 0.4);
+}
+
+.booking-container button:active {
+    transform: translateY(0);
+}
+
+.booking-container button.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EFD Login</title>
+
+    <link rel="stylesheet" href="css/shared-design-system.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/login.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="left">
+
+        <h1>EFD</h1>
+
+        <p>Emergency Fuel Delivery</p>
+
+        <!-- Optional -->
+        <!-- <img src="assets/images/login.png" alt="Login"> -->
+
+    </div>
+
+    <div class="right">
+
+        <h2>Login</h2>
+
+        <form id="loginForm">
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required>
+
+            <button
+                type="button"
+                id="loginBtn">
+
+                LOGIN
+
+            </button>
+
+            <p id="forgot" style="cursor:pointer; color:blue;">
+
+                Forgot Password?
+
+            </p>
+
+            <p>
+
+                Don't have an account?
+
+                <a href="register.html">
+
+                    Register
+
+                </a>
+
+            </p>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script type="module" src="js/auth.js"></script>
+
+</body>
+
+</html>

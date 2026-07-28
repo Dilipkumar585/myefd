@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>EFD Admin Panel</title>
+
+<link rel="stylesheet" href="css/shared-design-system.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/loading.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2><i class="fa-solid fa-shield-halved"></i> EFD ADMIN</h2>
+
+<a href="#"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+<a href="#users"><i class="fa-solid fa-users"></i> Users</a>
+<a href="#orders"><i class="fa-solid fa-box"></i> Orders</a>
+<a href="#"><i class="fa-solid fa-chart-simple"></i> Reports</a>
+<a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+<a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+</div>
+
+<div class="main">
+
+<h1><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</h1>
+<p>Overview of platform statistics and management</p>
+
+<div class="cards">
+
+<div class="card">
+<h2 id="totalUsers">0</h2>
+<p><i class="fa-solid fa-user"></i> Total Users</p>
+</div>
+
+<div class="card">
+<h2 id="totalAgents">0</h2>
+<p><i class="fa-solid fa-user-gear"></i> Total Agents</p>
+</div>
+
+<div class="card">
+<h2 id="totalOrders">0</h2>
+<p><i class="fa-solid fa-box"></i> Total Orders</p>
+</div>
+
+<div class="card">
+<h2 id="pendingOrders">0</h2>
+<p><i class="fa-solid fa-clock"></i> Pending Orders</p>
+</div>
+
+<div class="card">
+<h2 id="completedOrders">0</h2>
+<p><i class="fa-solid fa-circle-check"></i> Completed Orders</p>
+</div>
+
+<div class="card">
+<h2 id="totalRevenue">₹0</h2>
+<p><i class="fa-solid fa-indian-rupee-sign"></i> Total Revenue</p>
+</div>
+
+</div>
+
+<h2 id="users">
+<i class="fa-solid fa-users"></i> All Users
+</h2>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Role</th>
+</tr>
+
+<tbody id="usersTable">
+
+</tbody>
+
+</table>
+
+<h2 id="orders">
+<i class="fa-solid fa-box"></i> Recent Orders
+</h2>
+
+<table>
+
+<tr>
+<th>Customer</th>
+<th>Service</th>
+<th>Status</th>
+<th>Location</th>
+<th>Action</th>
+</tr>
+
+<tbody id="ordersTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script type="module" src="js/toast.js"></script>
+<script type="module" src="js/admin.js"></script>
+<script type="module" src="js/admin-auth.js"></script>
+
+</body>
+
+</html>

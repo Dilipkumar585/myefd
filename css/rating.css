@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #8E24AA 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.rating-box {
+    width: 500px;
+    max-width: 100%;
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rating-box h1 {
+    margin-bottom: 30px;
+    color: #6A1B9A;
+    font-size: 24px;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.star {
+    font-size: 48px;
+    color: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.star:hover {
+    transform: scale(1.2);
+    color: #FFC107;
+}
+
+.star.active {
+    color: #FFC107;
+    text-shadow: 0 0 15px rgba(255, 193, 7, 0.4);
+}
+
+#review {
+    width: 100%;
+    padding: 16px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.3s;
+    margin-bottom: 22px;
+}
+
+#review:focus {
+    border-color: #6A1B9A;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(106, 27, 154, 0.1);
+}
+
+#submitReview {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(106, 27, 154, 0.3);
+}
+
+#submitReview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(106, 27, 154, 0.4);
+}
+
+#submitReview:active {
+    transform: translateY(0);
+}
+
+#submitReview.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+

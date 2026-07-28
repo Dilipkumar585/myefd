@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EFD Register</title>
+
+<link rel="stylesheet" href="css/shared-design-system.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/register.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="left">
+
+<h1>Create Account</h1>
+
+<p>Emergency Fuel Delivery</p>
+
+</div>
+
+
+
+<div class="right">
+
+
+<form id="registerForm">
+
+
+
+<input
+type="text"
+id="name"
+placeholder="Full Name"
+required>
+
+
+
+<input
+type="email"
+id="email"
+placeholder="Email"
+required>
+
+
+
+    <input
+type="text"
+id="phone"
+placeholder="Phone Number"
+required>
+
+
+
+<select id="role" required>
+
+
+<option value="">Select Role</option>
+
+<option value="Customer">
+Customer
+</option>
+
+
+<option value="Fuel Agent">
+Fuel Agent
+</option>
+
+
+<option value="Mechanic Agent">
+Mechanic Agent
+</option>
+
+
+<option value="Ambulance Agent">
+Ambulance Agent
+</option>
+
+
+</select>
+
+<div id="upiSection" style="display:none;">
+<input
+type="text"
+id="upiId"
+placeholder="UPI ID (e.g. name@paytm / name@upi)"
+style="border-color:#4CAF50;">
+<small style="color:#666;font-size:12px;display:block;margin-top:-5px;">📱 Required for agents to receive payments via QR</small>
+</div>
+
+<script>
+// Show/hide UPI field based on role selection
+document.getElementById("role").addEventListener("change", function() {
+    var upiSection = document.getElementById("upiSection");
+    var role = this.value;
+    if (role === "Fuel Agent" || role === "Mechanic Agent" || role === "Ambulance Agent") {
+        upiSection.style.display = "block";
+        document.getElementById("upiId").required = true;
+    } else {
+        upiSection.style.display = "none";
+        document.getElementById("upiId").required = false;
+    }
+});
+</script>
+
+
+
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
+
+
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm Password"
+required>
+
+
+
+
+<button type="submit">
+
+Create Account
+
+</button>
+
+
+
+<p>
+
+Already have account?
+
+<a href="login.html">
+
+Login
+
+</a>
+
+
+</p>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+
+<script type="module" src="js/auth.js"></script>
+
+
+</body>
+
+</html>

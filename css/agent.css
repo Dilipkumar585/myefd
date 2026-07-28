@@ -1,0 +1,291 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    background: #eef3fb;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1565C0, #0D47A1);
+    position: fixed;
+    left: 0;
+    top: 0;
+    color: white;
+    padding: 25px;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.sidebar a {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+}
+
+.sidebar a i {
+    width: 24px;
+    margin-right: 8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* ================= MAIN ================= */
+.main {
+    margin-left: 250px;
+    width: 100%;
+    padding: 30px 35px;
+}
+
+/* ================= TOPBAR ================= */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    background: white;
+    padding: 18px 28px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.topbar h1 {
+    color: #0D47A1;
+    font-size: 24px;
+}
+
+.service-badge {
+    background: #e3f2fd;
+    color: #1565C0;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ================= SECTIONS ================= */
+.section {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.section h2 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.section h2 i {
+    margin-right: 10px;
+}
+
+/* ================= LOADING ================= */
+.loading-placeholder {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.loading-placeholder .loading-spinner {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(21, 101, 192, 0.2);
+    border-radius: 50%;
+    border-top-color: #1565C0;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ================= CARDS ================= */
+.card {
+    background: #f8faff;
+    padding: 22px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-header h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.card-body p {
+    margin: 6px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.card-body p i {
+    width: 20px;
+    color: #1565C0;
+    margin-right: 6px;
+}
+
+.card-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn i {
+    font-size: 14px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-accept {
+    background: linear-gradient(135deg, #4CAF50, #43A047);
+    color: white;
+}
+
+.btn-reject {
+    background: linear-gradient(135deg, #f44336, #e53935);
+    color: white;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1565C0, #1976D2);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: white;
+}
+
+.btn-complete {
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+    color: white;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #2196F3, #1E88E5);
+    color: white;
+}
+
+.status-badge {
+    font-weight: 500;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+}
+
+.empty-state h3 {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* ================= ACTIVE CARD ================= */
+.active-card {
+    background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        padding: 15px 10px;
+    }
+    .sidebar h2 {
+        font-size: 16px;
+    }
+    .sidebar a span,
+    .sidebar a i + span {
+        display: none;
+    }
+    .sidebar a i {
+        width: auto;
+        margin-right: 0;
+        font-size: 20px;
+    }
+    .main {
+        margin-left: 70px;
+        padding: 20px 15px;
+    }
+    .topbar {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    .card-actions {
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+

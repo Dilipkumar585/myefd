@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EFD - Ambulance Booking</title>
+
+<link rel="stylesheet" href="css/shared-design-system.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/loading.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    background: linear-gradient(135deg, #B71C1C, #D32F2F, #F44336);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
+}
+
+.booking-container {
+    width: 480px;
+    max-width: 100%;
+    background: white;
+    padding: 40px 35px;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    animation: fadeSlideUp 0.5s ease-out;
+}
+
+.booking-container h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    color: #C62828;
+    font-size: 26px;
+}
+
+.booking-container > p {
+    text-align: center;
+    color: #888;
+    margin-bottom: 28px;
+    font-size: 14px;
+}
+
+.input-modern {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 14px;
+}
+
+.input-modern:focus {
+    border-color: #D32F2F;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(211,47,47,0.1);
+}
+
+.input-modern::placeholder {
+    color: #aaa;
+}
+
+.btn-primary-modern {
+    width: 100%;
+    padding: 16px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #C62828, #E53935);
+    color: white;
+    box-shadow: 0 8px 25px rgba(198,40,40,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary-modern:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(198,40,40,0.4);
+}
+
+.btn-primary-modern:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+</style>
+
+<style>
+#timelineOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+#timelineOverlay.active { display: flex; }
+.timeline-panel {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+    animation: slideUpDialog 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.timeline-panel h2 {
+    color: #C62828;
+    font-size: 20px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.timeline-panel .sub-status { color: #888; font-size: 13px; margin-bottom: 20px; }
+.timeline-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 24px;
+}
+.timeline-steps::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 16px;
+    bottom: 16px;
+    width: 3px;
+    background: #e0e0e0;
+    border-radius: 2px;
+}
+.timeline-steps.completed-all::before { background: #4CAF50; }
+.timeline-step-item { display: flex; gap: 16px; padding: 12px 0; position: relative; }
+.timeline-step-dot {
+    width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: white; z-index: 1;
+    position: relative; margin-left: -24px; border: 3px solid white;
+    transition: all 0.3s ease;
+}
+.timeline-step-dot.completed { background: #4CAF50; box-shadow: 0 0 0 4px rgba(76,175,80,0.2); }
+.timeline-step-dot.active { background: #2196F3; box-shadow: 0 0 0 4px rgba(33,150,243,0.2); animation: pulse-timeline 2s ease-in-out infinite; }
+.timeline-step-dot.pending { background: #e0e0e0; color: #999; }
+.timeline-step-content { flex: 1; }
+.timeline-step-content h4 { font-size: 14px; color: #333; margin-bottom: 2px; }
+.timeline-step-content p { font-size: 12px; color: #999; }
+.timeline-step-content .step-time { font-size: 11px; color: #bbb; margin-top: 2px; }
+.agent-info-card {
+    background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.agent-avatar { width: 48px; height: 48px; border-radius: 50%; background: #C62828; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 600; flex-shrink: 0; }
+.agent-details { flex: 1; }
+.agent-details h4 { font-size: 15px; color: #B71C1C; margin-bottom: 2px; }
+.agent-details p { font-size: 12px; color: #555; }
+.agent-rating { display: flex; align-items: center; gap: 4px; font-size: 13px; color: #FF9800; margin-top: 4px; }
+.eta-display { background: linear-gradient(135deg, #FFEBEE, #FFCDD2); border-radius: 14px; padding: 14px 18px; margin: 16px 0; display: flex; align-items: center; gap: 12px; }
+.eta-display i { font-size: 24px; color: #D32F2F; }
+.eta-display .eta-info h3 { font-size: 18px; color: #C62828; margin-bottom: 2px; }
+.eta-display .eta-info p { font-size: 12px; color: #888; }
+.timeline-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.timeline-actions .btn-modern { flex: 1; min-width: 100px; }
+.divider { border: none; height: 1px; background: #e0e0e0; margin: 16px 0; }
+</style>
+</head>
+<body>
+
+<div class="booking-container page-enter">
+    <h1><i class="fa-solid fa-truck-medical" style="color:#D32F2F;"></i> Ambulance Service</h1>
+    <p>Emergency medical ambulance request</p>
+
+    <input class="input-modern" type="text" id="patientName" placeholder="Patient name">
+    <input class="input-modern" type="text" id="emergency" placeholder="Emergency type (Accident, Fever, etc.)">
+    <label>Your Location <span id="locationStatus3" style="font-weight:400;color:#888;font-size:12px;">(detecting...)</span></label>
+    <div style="position:relative;">
+        <input class="input-modern" type="text" id="location3" placeholder="Detecting your location..." readonly style="background:#f0f7ff;border-color:#90CAF9;padding-right:40px;">
+        <span id="locationIcon3" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#D32F2F;">
+            <i class="fa-solid fa-location-dot fa-beat"></i>
+        </span>
+    </div>
+    <input class="input-modern" type="tel" id="phone3" placeholder="Contact number">
+
+    <button class="btn-primary-modern" id="bookAmbulance">
+        <i class="fa-solid fa-truck-medical"></i> Request Ambulance
+    </button>
+</div>
+
+<!-- Timeline Overlay -->
+<div id="timelineOverlay">
+    <div class="timeline-panel" id="timelinePanel">
+        <h2><i class="fa-solid fa-truck-medical" style="color:#D32F2F;"></i> <span id="tlServiceName">Ambulance Service</span></h2>
+        <p class="sub-status">Status: <strong id="tlStatusText">Pending</strong></p>
+
+        <div class="eta-display" id="etaDisplay" style="display:none;">
+            <i class="fa-solid fa-clock"></i>
+            <div class="eta-info">
+                <h3 id="etaText">Arriving in ~5 mins</h3>
+                <p id="etaSubtext">Estimated time of arrival</p>
+            </div>
+        </div>
+
+        <div class="agent-info-card" id="agentInfoCard" style="display:none;">
+            <div class="agent-avatar" id="agentAvatar">A</div>
+            <div class="agent-details">
+                <h4 id="agentName">Agent Name</h4>
+                <p id="agentServiceType">Ambulance Specialist</p>
+                <div class="agent-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    <span style="margin-left:4px;color:#666;">4.5</span>
+                </div>
+            </div>
+            <a id="callAgentBtn" href="tel:" style="background:#4CAF50;color:white;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(76,175,80,0.3);">
+                <i class="fa-solid fa-phone"></i>
+            </a>
+        </div>
+
+        <div class="timeline-steps" id="timelineSteps">
+            <div class="timeline-step-item">
+                <div class="timeline-step-dot completed" id="stepRequested">✓</div>
+                <div class="timeline-step-content">
+                    <h4>Requested</h4>
+                    <p>Order has been placed</p>
+                    <p class="step-time" id="timeRequested">Just now</p>
+                </div>
+            </div>
+            <div class="timeline-step-item">
+                <div class="timeline-step-dot pending" id="stepAccepted">2</div>
+                <div class="timeline-step-content">
+                    <h4>Accepted</h4>
+                    <p>Agent has accepted your request</p>
+                    <p class="step-time" id="timeAccepted">-</p>
+                </div>
+            </div>
+            <div class="timeline-step-item">
+                <div class="timeline-step-dot pending" id="stepStarted">3</div>
+                <div class="timeline-step-content">
+                    <h4>Started</h4>
+                    <p>Agent is on the way</p>
+                    <p class="step-time" id="timeStarted">-</p>
+                </div>
+            </div>
+            <div class="timeline-step-item">
+                <div class="timeline-step-dot pending" id="stepReached">4</div>
+                <div class="timeline-step-content">
+                    <h4>Reached</h4>
+                    <p>Agent has arrived at your location</p>
+                    <p class="step-time" id="timeReached">-</p>
+                </div>
+            </div>
+            <div class="timeline-step-item">
+                <div class="timeline-step-dot pending" id="stepCompleted">5</div>
+                <div class="timeline-step-content">
+                    <h4>Completed</h4>
+                    <p>Service has been completed</p>
+                    <p class="step-time" id="timeCompleted">-</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="cancelSection" style="display:none;">
+            <div class="divider"></div>
+            <button class="btn-modern btn-error-modern btn-full" id="cancelOrderBtn">
+                <i class="fa-solid fa-ban"></i> Cancel Order
+            </button>
+        </div>
+
+        <div id="cancelReasonDialog" style="display:none;margin-top:16px;">
+            <h4 style="font-size:14px;color:#D32F2F;margin-bottom:12px;">Why do you want to cancel?</h4>
+            <div id="cancelReasons">
+                <label class="cancel-reason" style="display:block;padding:10px 14px;border:2px solid #e0e0e0;border-radius:10px;margin-bottom:8px;cursor:pointer;font-size:13px;"><input type="radio" name="cancelReason" value="Changed my mind"> Changed my mind</label>
+                <label class="cancel-reason" style="display:block;padding:10px 14px;border:2px solid #e0e0e0;border-radius:10px;margin-bottom:8px;cursor:pointer;font-size:13px;"><input type="radio" name="cancelReason" value="Found another service"> Found another service</label>
+                <label class="cancel-reason" style="display:block;padding:10px 14px;border:2px solid #e0e0e0;border-radius:10px;margin-bottom:8px;cursor:pointer;font-size:13px;"><input type="radio" name="cancelReason" value="Taking too long"> Taking too long</label>
+                <label class="cancel-reason" style="display:block;padding:10px 14px;border:2px solid #e0e0e0;border-radius:10px;margin-bottom:8px;cursor:pointer;font-size:13px;"><input type="radio" name="cancelReason" value="Wrong location"> Wrong location</label>
+                <label class="cancel-reason" style="display:block;padding:10px 14px;border:2px solid #e0e0e0;border-radius:10px;margin-bottom:8px;cursor:pointer;font-size:13px;"><input type="radio" name="cancelReason" value="Other"> Other</label>
+            </div>
+            <button class="btn-modern btn-error-modern btn-full" id="confirmCancelBtn" style="margin-top:8px;">Yes, Cancel Order</button>
+            <button class="btn-modern btn-ghost-modern btn-full" id="keepOrderBtn" style="margin-top:8px;">Keep Order</button>
+        </div>
+
+        <div class="timeline-actions" id="tlActions">
+            <a href="tracking.html" class="btn-modern btn-primary-modern" style="flex:1;text-decoration:none;">
+                <i class="fa-solid fa-map"></i> Live Track
+            </a>
+            <button class="btn-modern btn-outline-modern" onclick="closeTimeline()" style="flex:0.5;">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="js/toast.js"></script>
+<script type="module" src="js/ambulance-booking.js"></script>
+
+<script>
+window.openTimeline = function() { const o = document.getElementById('timelineOverlay'); if (o) o.classList.add('active'); document.body.style.overflow = 'hidden'; };
+window.closeTimeline = function() { const o = document.getElementById('timelineOverlay'); if (o) o.classList.remove('active'); document.body.style.overflow = ''; };
+</script>
+</body>
+</html>
+

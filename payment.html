@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>EFD Payment</title>
+
+    <link rel="stylesheet" href="css/shared-design-system.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/payment.css">
+    <link rel="stylesheet" href="css/loading.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="payment-box">
+
+<h1>💳 Payment Summary</h1>
+
+<!-- Service Info -->
+<div id="serviceLabel" class="row">
+<span id="serviceName">Service Charge</span>
+<span id="amount">₹500</span>
+</div>
+
+<!-- Location Info -->
+<div class="row location-row" id="locationRow" style="font-size:13px;color:#666;flex-direction:column;align-items:flex-start;gap:4px;">
+<span><i class="fa-solid fa-location-dot" style="color:#1565C0;"></i> <strong>Pickup:</strong> <span id="customerLocation">Fetching...</span></span>
+<span><i class="fa-solid fa-flag-checkered" style="color:#FF9800;"></i> <strong>Drop:</strong> Agent's current location</span>
+</div>
+
+<!-- Distance Info -->
+<div class="row distance-row" id="distanceRow">
+<span><i class="fa-solid fa-road" style="color:#4CAF50;"></i> <strong>Distance</strong></span>
+<span id="distanceDisplay">Calculating...</span>
+</div>
+
+<hr class="fare-divider">
+
+<!-- Fare Breakdown -->
+<h3 class="fare-title">💰 Fare Breakdown</h3>
+
+<div class="row fare-row">
+<span>Base Fare</span>
+<span id="baseFare">₹30</span>
+</div>
+
+<div class="row fare-row">
+<span id="distanceFareLabel">Distance Charge (0 km × ₹0/km)</span>
+<span id="distanceFare">₹0</span>
+</div>
+
+<div class="row fare-row">
+<span id="serviceFeeLabel">Service Fee</span>
+<span id="serviceFee">₹30</span>
+</div>
+
+<div class="row fare-row">
+<span>GST (18%)</span>
+<span id="gst">₹0</span>
+</div>
+
+<hr>
+
+<div class="total">
+<h2>Total</h2>
+<h2 id="totalAmount">₹0</h2>
+</div>
+
+<h3>📌 Select Payment Method</h3>
+
+<div class="payment-options">
+<label class="payment-option">
+<input type="radio" name="pay" value="UPI" checked>
+<span class="radio-custom"></span>
+<span>📱 UPI (Google Pay / PhonePe / Paytm)</span>
+</label>
+
+<label class="payment-option">
+<input type="radio" name="pay" value="Card">
+<span class="radio-custom"></span>
+<span>💳 Credit / Debit Card</span>
+</label>
+
+<label class="payment-option">
+<input type="radio" name="pay" value="Cash">
+<span class="radio-custom"></span>
+<span>💵 Cash On Delivery</span>
+</label>
+</div>
+
+<!-- UPI QR Section -->
+<div id="upiQrSection" style="display:none;margin-top:20px;padding:20px;background:#f0f7ff;border-radius:16px;border:2px solid #1565C0;text-align:center;">
+    <h4 style="color:#1565C0;font-size:16px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <i class="fa-solid fa-qrcode"></i> Scan to Pay
+    </h4>
+    <p style="color:#666;font-size:13px;margin-bottom:16px;">
+        Pay directly to agent via UPI
+    </p>
+    <div id="qrcode" style="display:inline-block;background:white;padding:12px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1);"></div>
+    <div id="upiDetails" style="margin-top:12px;font-size:14px;color:#333;">
+        <p><strong>UPI ID:</strong> <span id="agentUpiId">Loading...</span></p>
+        <p style="margin-top:4px;font-size:12px;color:#888;">Pay via GPay, PhonePe, Paytm or any UPI app</p>
+    </div>
+</div>
+
+<button id="payBtn" class="btn-primary">
+💰 Pay ₹0
+</button>
+
+<p class="secure-badge">🔒 Secured Payment</p>
+
+</div>
+
+<script type="module" src="js/toast.js"></script>
+<script type="module" src="js/payment.js"></script>
+
+</body>
+
+</html>

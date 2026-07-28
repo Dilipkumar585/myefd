@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>My Orders - EFD</title>
+
+<link rel="stylesheet" href="css/shared-design-system.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/orders.css">
+<link rel="stylesheet" href="css/loading.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📦 Order History</h1>
+
+<input
+type="text"
+id="search"
+placeholder="🔍 Search orders...">
+
+<div id="orders">
+
+<div class="loading-placeholder" style="text-align:center;padding:40px;color:#999;">
+    <div class="loading-spinner" style="display:inline-block;width:30px;height:30px;border:3px solid rgba(21,101,192,0.2);border-radius:50%;border-top-color:#1565C0;animation:spin 0.8s linear infinite;margin-bottom:12px;"></div>
+    <p>Loading orders...</p>
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="js/toast.js"></script>
+<script type="module" src="js/orders.js"></script>
+
+</body>
+
+</html>
