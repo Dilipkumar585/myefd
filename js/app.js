@@ -12,3 +12,10 @@ if (loginBtn) {
         window.location.href = "login.html";
     });
 }
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("app").style.display = "block";
+    }, 2000);
+});
