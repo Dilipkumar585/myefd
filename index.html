@@ -515,12 +515,34 @@
             footer { padding: 20px 16px; }
             footer .footer-links { flex-wrap: wrap; gap: 16px; }
         }
+        #splash{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#6C2BD9;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    color:#fff;
+}
     </style>
 
 </head>
 
 <body>
+<div id="splash">
+    <img src="images/logo.png" width="120">
+    <h1>EFD</h1>
+    <p>Emergency Fuel Delivery</p>
+</div>
 
+<div id="app" style="display:none;">
+    <!-- Nee website content -->
+</div>
 <header class="page-enter">
     <div class="logo">
         <span>⛽</span> EFD
